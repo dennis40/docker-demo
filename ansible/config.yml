@@ -1,6 +1,6 @@
 ---
 - name: Preconfig
-  hosts: cluster
+  hosts: demo
   tasks:
     - name: Утановка Docker
       block:

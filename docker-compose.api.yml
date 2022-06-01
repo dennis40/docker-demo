@@ -1,14 +1,14 @@
-version: "3"
+version: '3'
 services:
   api:
-    build: 
+    build:
       context: .
       dockerfile: ./apps/api/Dockerfile
     restart: always
     container_name: api
-    volumes: 
-    - ./.env:/opt/app/.env
+    volumes:
+      - ./.env:/opt/app/.env
     ports:
-    - 3002:3000
+      - 3002:3000
     networks:
-    - myNetwork
+      - myNetwork

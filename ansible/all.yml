@@ -1,0 +1,5 @@
+---
+- name: All config
+  hosts: cluster
+  roles:
+    - preconfig

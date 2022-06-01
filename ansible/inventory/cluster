@@ -1,6 +1,5 @@
 [cluster]
-server1 ansible_host=127.0.0.1 ansible_user=vagrant ansible_ssh_pass=vagrant ansible_port=23
-server2 ansible_host=127.0.0.1 ansible_user=vagrant ansible_ssh_pass=vagrant ansible_port=24
-server3 ansible_host=127.0.0.1 ansible_user=vagrant ansible_ssh_pass=vagrant ansible_port=25
-server4 ansible_host=127.0.0.1 ansible_user=vagrant ansible_ssh_pass=vagrant ansible_port=26
-server5 ansible_host=127.0.0.1 ansible_user=vagrant ansible_ssh_pass=vagrant ansible_port=27
+server1 ansible_host=127.0.0.1 ansible_user=vagrant ansible_port=2223
+server2 ansible_host=127.0.0.1 ansible_user=vagrant ansible_port=2224
+server3 ansible_host=127.0.0.1 ansible_user=vagrant ansible_port=2225
+server4 ansible_host=127.0.0.1 ansible_user=vagrant ansible_port=2226

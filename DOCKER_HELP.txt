@@ -80,6 +80,8 @@ docker node update--availability=pause hostname - изменение досту�
 
 docker service create --name registry --publish 5000:5000 --constraint node.labels.registry==true --mount type=bind,source=/home/vagrant/registry,destination=/var/lib/registry -e REGISTRY_HTTP_ADDR=0.0.0.0:5000 registry:latest
 
+docker service create --publish 3000:3000 --name ip --replicas=3 localhost:5000/ip:latest
+
 
 
 ####################################################################################################################

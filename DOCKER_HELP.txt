@@ -1,0 +1,105 @@
+Проброска портов host ip 127.0.0.1 host port 2222 guest port 22
+Подключение по ssh nameUser@ipPort -p 2222
+
+Публичные ключи для подключения без ввода пароля https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04-ru
+ssh-keygen на host машине. Копировать id_rsa.pub в ~/.ssh/authorized_keys
+
+Установка docker на ubuntu 	https://docs.docker.com/engine/install/ubuntu/
+				https://docs.docker.com/engine/install/linux-postinstall/
+Установка docker-compose 	https://docs.docker.com/compose/install/
+Dive(обзор контейнеров) 		https://github.com/wagoodman/dive
+
+Удаление образов/контейнеров https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes-ru
+
+docker run -it node
+docker ps - посмотреть все запущенные контейнеры
+docker ps -a остановленные контейнеры
+docker rm id|name - удалить контейнер
+
+docker create --name mongodb mongo(type container)
+docker run --name my-mongo -d mongo - создаст и запустит контейнер с Mongo в отдельном процессе, а не в текущей сессии
+docker container prune - удалить не запущенные контейнеры
+docker stats
+docker inspect dockerName (-s) сколько занимает (-f "{{.State.Status}}") вернет только это свойство
+docker logs dockerName
+docker pull nginx(type) - скачать docker обраpз, который лежит на docker hub, на локальную машину
+docker images - посмотреть образы
+
+docker exec [параметры] [имя контейнера] [команда(bash)] - выполнение команд в контейнере
+	-i(интерактивное)
+	-t(псевдо tty)
+	-d(запуск в фоне)
+	-e(переменные окружения)
+	-u(пользователь)
+	-w(рабочая директория)
+docker exec -it mongodb bash|sh - запустит bash(command line) в контейнере
+docker build -f ./apps/api/Dockerfile -t test:latest .
+	собрать образ	           название образа   в текущей папке	
+
+Авторизоваться, чтобы иметь возможность публиковать пакеты. В TOKEN.TXT хранится ключ для подключение(генерится на гитхабе Settings/DeveloperSettings/PersonalTokens)
+cat TOKEN.TXT | docker login https://docker.pkg.github.com -u dennis40 --password-stdin
+Создаем тег(контенер) для публикации на основе существующего
+docker tag docker-demo_api:latest docker.pkg.github.com/dennis40/docker-demo/docker-api-test:latest
+Публикуем контейнер
+docker push docker.pkg.github.com/dennis40/docker-demo/docker-api-test
+
+Создаем registry
+docker-compose -f docker-compose.registry.yml up -d
+Создаем тег
+docker tag docker-demo_api:latest localhost:5000/api
+docker push localhost:5000/api
+
+docker-compose up -d(Detached mode: Run containers in the background, print new container names. Incompatible with --abort-on-container-exit.) 
+	Builds, (re)creates, starts, and attaches to containers for a service.
+Подставка переменных в docker-compose.yml через "${VARIABLE}"
+docker-compose --env-file fileName up -d  
+docker-compose --env-file fileName config - предпросмотр подставленных переменных
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d -запуск конфигурации из двух файлов
+
+docerk service create --name nameService service(any)
+docker service scale service=2 - масштабировать сервис
+docker service creare --config|secret nameConfig|nameSecret --name serviceName service
+docker service rm nameService
+
+docker secret/config create nameSecret secret.txt - создать секрет
+echo "smt" | docker config create my_conf -        - создание конфига 
+
+docker node update server1 --label-add registry=true
+
+Ansible
+ansible-playbook -i demo-server config.yml -K  запуск с вводом пароля
+		
+Docker swarm
+docker swarm init (на одном из серверов)
+docker swarm join-token manger|worken - получить токен для присоединения
+docker node ls - посмотреть соединенные ноды
+docker node rm id|hostname
+docker node inspect hostname --pretty
+docker node promote/demote hostname - повысить/понизить ноду
+docker node update--availability=pause hostname - изменение доступности ноды
+
+docker service create --name registry --publish 5000:5000 --constraint node.labels.registry==true --mount type=bind,source=/home/vagrant/registry,destination=/var/lib/registry -e REGISTRY_HTTP_ADDR=0.0.0.0:5000 registry:latest
+
+
+
+####################################################################################################################
+nano файл ctrl + o сохранить, ctrl + x для выхода
+pwd - текущая директория
+ls -l список файлов в директории
+ls -la список со скрытыми
+mkdir - создать директорию
+touch - создать файл
+rm - удалить файл
+rmdir - удалить директорию -R рекурсивно
+cp - копировать файл
+mv - перенести файл
+cat - вывести содержимое файла 
+tail -1 - вывести последнюю строку файла
+head -1 - вывести первую строку
+less - просмотреть файл, :q -выйти
+grep "text" - выведет найденные строки
+find ./apps -name "main.ts" - найдет файлы с таким именем
+echo 1 > a.text - создаст файл с контентом 1
+diff file1 file2 - разница в файлах
+df - занятость диска
+htop - текущие процессы
